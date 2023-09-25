@@ -1,7 +1,7 @@
 'use strict';
 
 import { Model, QueryInterface, DataTypes } from "sequelize";
-import ITeam from "../../Interfaces/ITeam";
+import { ITeam } from "../../Interfaces/ITeam";
 
 module.exports = {
   up: async (queryInterface: QueryInterface) => {
@@ -16,7 +16,7 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
         field: 'team_name'
-      }
+      },
     })
   },
 

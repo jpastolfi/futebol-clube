@@ -7,7 +7,7 @@ export default class TeamController {
 
   public async findAll(req: Request, res: Response) {
     const serviceResponse = await this.teamService.findAll();
-    res.status(200).json(serviceResponse.data);
+    return res.status(200).json(serviceResponse.data);
   }
 
   public async findById(req: Request, res: Response) {

@@ -1,5 +1,6 @@
 import * as express from 'express';
 /* import { Request, Response, NextFunction } from 'express'; */
+import * as cors from 'cors';
 import teamRouter from './routes/teams';
 
 class App {
@@ -24,6 +25,7 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+    this.app.use(cors());
   }
 
   private routes(): void {

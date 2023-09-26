@@ -9,12 +9,13 @@ export default class TeamModel implements ITeamModel {
     return response;
   }
 
-  async findById(id: number): Promise<ITeam> {
-    const response = await this.teamModelSequelize.findByPk(id);
-    if (!response) throw new Error('Time não encontrado');
+  async findById(teamId: ITeam['id']): Promise<ITeam | null> {
+    const response = await this.teamModelSequelize.findByPk(teamId);
+    if (response === null) return null;
+    const { id, teamName }: ITeam = response;
     return {
-      id: response.id,
-      teamName: response.teamName,
+      id,
+      teamName,
     };
   }
 }

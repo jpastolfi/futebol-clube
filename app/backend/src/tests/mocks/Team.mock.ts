@@ -63,3 +63,8 @@ export const allTeams = [{
   teamName: 'São Paulo',
 }
 ];
+
+export const firstTeam = [{
+  id: 1,
+  teamName: 'Avaí/Kindermann',
+}];

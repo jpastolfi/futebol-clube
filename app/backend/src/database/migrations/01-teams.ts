@@ -1,5 +1,3 @@
-'use strict';
-
 import { Model, QueryInterface, DataTypes } from "sequelize";
 import { ITeam } from "../../Interfaces/ITeam";
 

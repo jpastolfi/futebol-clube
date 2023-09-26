@@ -64,7 +64,9 @@ export const allTeams = [{
 }
 ];
 
-export const firstTeam = [{
+export const firstTeam = {
   id: 1,
   teamName: 'Avaí/Kindermann',
-}];
+};
+
+export const idToSearchAndFail = 0;

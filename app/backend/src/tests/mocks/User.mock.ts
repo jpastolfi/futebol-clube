@@ -15,3 +15,16 @@ export const validLoginReturn = {
     password: "$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO",
   }
 }
+
+export const invalidUsernameLogin = {
+  username: "invalid",
+  password: "secret_user",
+}
+
+export const invalidPasswordLogin = {
+  username: "user@user.com",
+  password: "user", 
+}
+
+export const nonExistentUsernameLogin = {}
+export const nonExistentPasswordLogin = {}

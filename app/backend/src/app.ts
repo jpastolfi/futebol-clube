@@ -1,7 +1,7 @@
 import * as express from 'express';
 /* import { Request, Response, NextFunction } from 'express'; */
 import * as cors from 'cors';
-import teamRouter from './routes/teams';
+import { teamsRouter, loginRouter } from './routes';
 
 class App {
   public app: express.Express;
@@ -29,7 +29,8 @@ class App {
   }
 
   private routes(): void {
-    this.app.use('/teams', teamRouter);
+    this.app.use('/teams', teamsRouter);
+    this.app.use('/login', loginRouter);
   }
 
   public start(PORT: string | number): void {

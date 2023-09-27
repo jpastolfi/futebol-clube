@@ -2,12 +2,22 @@ export const noUsernameLogin = {
   password: "secret_user", 
 };
 export const noPasswordLogin = {
-  username: "user@user.com",
+  email: "user@user.com",
 }
 
 export const validLogin = {
-  username: "user@user.com",
+  email: "user@user.com",
   password: "secret_user",
+}
+
+export const nonExistentEmail = {
+  email: "users@user.com",
+  password: "secret_user",
+}
+
+export const wrongPassword = {
+  email: "user@user.com",
+  password: "secret_users",
 }
 
 export const validLoginReturn = {
@@ -17,14 +27,20 @@ export const validLoginReturn = {
 }
 
 export const invalidUsernameLogin = {
-  username: "invalid",
+  email: "invalid",
   password: "secret_user",
 }
 
 export const invalidPasswordLogin = {
-  username: "user@user.com",
-  password: "user", 
+  email: "user@user.com",
+  password: "user",
 }
 
-export const nonExistentUsernameLogin = {}
-export const nonExistentPasswordLogin = {}
+export const modelResponse = {
+  id: 2,
+  username: 'User',
+  role: 'user',
+  email: 'user@user.com',
+  password: '$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO'
+  //secret_user
+}

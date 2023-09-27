@@ -8,15 +8,14 @@ export default class UserModel implements IUserModel {
   async findByEmail(
     emailToSearch: IUser['email'],
     passwordToCheck: IUser['password'],
-  ): Promise<IUser | string> {
+  ): Promise<IUser | null> {
     const response = await this.userModelSequelize.findOne({
       where: { email: emailToSearch },
     });
-
-    if (response === null) return 'deu ruim';
+    if (response === null) return null;
     const { id, username, role, email, password } :IUser = response;
-    const isPasswordValid = await bcrypt.compare(passwordToCheck, password);
-    if (!isPasswordValid) return 'deu ruim';
+    const isPasswordValid = bcrypt.compareSync(passwordToCheck, password);
+    if (!isPasswordValid) return null;
     return {
       id,
       username,

@@ -1,7 +1,7 @@
-import * as jwt from 'jsonwebtoken';
 import UserModel from '../models/UserModel';
 import { IUser, IUserModel } from '../Interfaces/IUser';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
+import Token from '../utils/Token';
 
 export default class UserService {
   constructor(private userModel: IUserModel = new UserModel()) {}
@@ -11,16 +11,12 @@ export default class UserService {
     password: IUser['password'],
   ): Promise<ServiceResponse<{ token: string }>> {
     const response = await this.userModel.findByEmail(email, password);
-    if (response === 'deu ruim') {
+    if (response === null) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' },
       };
     }
-    const token = jwt.sign({
-      email,
-      password,
-    }, process.env.JWT_SECRET || 'jwt_secret', {
-      expiresIn: '7d',
-    });
+    const { role } = response;
+    const token = Token.sign({ email, password, role });
     return { status: 'SUCCESSFUL', data: { token } };
   }
 }

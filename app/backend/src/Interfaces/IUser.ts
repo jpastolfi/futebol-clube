@@ -10,5 +10,5 @@ export interface IUserModel {
   findByEmail(
     emailToSearch: IUser['email'],
     passwordToCheck: IUser['password'],
-  ): Promise<IUser | string>
+  ): Promise<IUser | null>
 }

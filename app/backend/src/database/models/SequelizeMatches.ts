@@ -1,8 +1,8 @@
 import {
   DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional,
 } from 'sequelize';
-
 import db from '.';
+import SequelizeTeams from './SequelizeTeams';
 
 export default class SequelizeMatches extends
   Model<InferAttributes<SequelizeMatches>, InferCreationAttributes<SequelizeMatches>> {
@@ -42,3 +42,8 @@ SequelizeMatches.init({
   timestamps: false,
   underscored: true,
 });
+
+SequelizeMatches.belongsTo(SequelizeTeams, { as: 'homeTeam', foreignKey: 'homeTeamId' });
+SequelizeMatches.belongsTo(SequelizeTeams, { as: 'awayTeam', foreignKey: 'awayTeamId' });
+SequelizeTeams.hasMany(SequelizeMatches, { foreignKey: 'homeTeamId' });
+SequelizeTeams.hasMany(SequelizeMatches, { foreignKey: 'awayTeamId' });

@@ -7,6 +7,11 @@ export interface IMatch {
   inProgress: boolean;
 }
 
+export interface IMatchReturn extends IMatch {
+  homeTeam: object,
+  awayTeam: object,
+}
+
 export interface IMatchModel {
   findAll(inProgress: string): Promise<IMatch[]>;
   finishMatch(id: number): void;

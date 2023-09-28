@@ -27,6 +27,11 @@ export default class MatchController {
 
   public async insertMatch(req: Request, res: Response) {
     const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+    if (homeTeamId === awayTeamId) {
+      return res.status(422).json({
+        message: 'It is not possible to create a match with two equal teams',
+      });
+    }
     const serviceResponse = await this
       .matchService.insertMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);

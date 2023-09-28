@@ -11,4 +11,10 @@ export interface IMatchModel {
   findAll(inProgress: string): Promise<IMatch[]>;
   finishMatch(id: number): void;
   updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number): void;
+  insertMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<IMatch>;
 }

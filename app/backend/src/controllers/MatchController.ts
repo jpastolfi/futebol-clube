@@ -20,7 +20,15 @@ export default class MatchController {
   public async updateMatch(req: Request, res: Response) {
     const id = Number(req.params.id);
     const { homeTeamGoals, awayTeamGoals } = req.body;
-    const serviceResponse = await this.matchService.updateMatch(id, homeTeamGoals, awayTeamGoals);
-    return res.status(200).json('teste');
+    await this.matchService.updateMatch(id, homeTeamGoals, awayTeamGoals);
+    return res.status(200).json({
+      message: `Match ${id}'s score has been altered to ${homeTeamGoals}x${awayTeamGoals}` });
+  }
+
+  public async insertMatch(req: Request, res: Response) {
+    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+    const serviceResponse = await this
+      .matchService.insertMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
+    return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
 }

@@ -46,4 +46,20 @@ export default class MatchModel implements IMatchModel {
       { where: { id } },
     );
   }
+
+  async insertMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<IMatch> {
+    const response = await this.matchModelSequelize.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+    return response;
+  }
 }

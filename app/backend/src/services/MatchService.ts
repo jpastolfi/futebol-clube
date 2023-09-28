@@ -22,4 +22,19 @@ export default class MatchService {
   ): Promise<void> {
     await this.matchModel.updateMatch(id, homeTeamGoals, awayTeamGoals);
   }
+
+  public async insertMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<ServiceResponse<Partial<IMatch>>> {
+    const response = await this.matchModel.insertMatch(
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+    return { status: 'CREATED', data: response };
+  }
 }

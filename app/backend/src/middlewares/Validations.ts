@@ -18,7 +18,6 @@ export default class Validations {
     const token = authorization.split(' ')[1];
     const role = Token.verify(token);
     if (!role) return res.status(401).json({ message: 'Token must be a valid token' });
-    console.log(typeof req.originalUrl);
     if (req.originalUrl === '/login/role') return res.status(200).json({ role });
     next();
   }

@@ -11,5 +11,9 @@ router.patch(
   '/:id/finish',
   (req: Request, res: Response) => matchController.finishMatch(req, res),
 );
+router.patch(
+  '/:id',
+  (req: Request, res: Response) => matchController.updateMatch(req, res),
+);
 
 export default router;

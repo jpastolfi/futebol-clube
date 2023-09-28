@@ -32,4 +32,18 @@ export default class MatchModel implements IMatchModel {
       { where: { id } },
     );
   }
+
+  async updateMatch(
+    id:number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<void> {
+    await this.matchModelSequelize.update(
+      {
+        homeTeamGoals,
+        awayTeamGoals,
+      },
+      { where: { id } },
+    );
+  }
 }

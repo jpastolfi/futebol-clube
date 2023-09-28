@@ -16,7 +16,7 @@ export default class UserService {
       };
     }
     const { role } = response;
-    const token = Token.sign({ email, password, role });
+    const token = Token.sign({ role });
     return { status: 'SUCCESSFUL', data: { token } };
   }
 }

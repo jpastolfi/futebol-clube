@@ -25,4 +25,11 @@ export default class MatchModel implements IMatchModel {
     const response = await this.matchModelSequelize.findAll(query);
     return response;
   }
+
+  async finishMatch(id: number): Promise<void> {
+    await this.matchModelSequelize.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+  }
 }

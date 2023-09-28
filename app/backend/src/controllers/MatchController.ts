@@ -10,4 +10,10 @@ export default class MatchController {
     const serviceResponse = await this.matchService.findAll(inProgress as string);
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
+
+  public async finishMatch(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const serviceResponse = await this.matchService.finishMatch(id);
+    return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
+  }
 }

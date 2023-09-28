@@ -9,4 +9,5 @@ export interface IMatch {
 
 export interface IMatchModel {
   findAll(inProgress: string): Promise<IMatch[]>;
+  finishMatch(id: number): void;
 }

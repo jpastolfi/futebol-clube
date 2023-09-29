@@ -1063,3 +1063,38 @@ export const ongoingMatches: IMatchReturn[] = [
     }
   }
 ]
+
+export const updatedScore = {
+  homeTeamGoals: 13,
+  awayTeamGoals: 13,
+}
+
+export const newMatchValidInfo = {
+  homeTeamId: 16,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+};
+
+export const newMatchValidInfoReturn = {
+  id: 49,
+  homeTeamId: 16,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+  inProgress: true
+};
+
+export const newMatchSameTeam = {
+  homeTeamId: 16,
+  awayTeamId: 16,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+};
+
+export const newMatchNonExistentTeam = {
+  homeTeamId: 999,
+  awayTeamId: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+};

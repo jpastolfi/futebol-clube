@@ -3,9 +3,11 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { app } from '../app';
-import { allMatches, finishedMatches, ongoingMatches } from './mocks/Match.mock'; 
+import { allMatches, finishedMatches, ongoingMatches, newMatchValidInfo, newMatchValidInfoReturn, newMatchSameTeam, newMatchNonExistentTeam, updatedScore } from './mocks/Match.mock'; 
 import SequelizeMatches from '../database/models/SequelizeMatches';
 import * as jwt from 'jsonwebtoken';
+import { allTeams } from './mocks/Team.mock';
+import SequelizeTeams from '../database/models/SequelizeTeams'
 
 chai.use(chaiHttp);
 
@@ -45,11 +47,38 @@ describe('/matches', async function() {
     sinon.stub(jwt, 'verify').returns({
       role: 'user',
     } as any)
-    const {status, body} = await chai.request(app).patch('/matches/1').send({
-      homeTeamGoals: 13,
-      awayTeamGoals: 13
-  }).set('authorization', 'validToken');
+    const {status, body} = await chai.request(app).patch('/matches/1').send(updatedScore).set('authorization', 'validToken');
     expect(status).to.be.equal(200);
     expect(body).to.be.deep.equal({message: "Match 1's score has been altered to 13x13"});
+  }),
+  it('Cadastra uma nova partida', async function() {
+    sinon.stub(SequelizeMatches, 'create').resolves(newMatchValidInfoReturn as any);
+    sinon.stub(jwt, 'verify').returns({
+      role: 'user',
+    } as any)
+    const {status, body} = await chai.request(app).post('/matches').send(newMatchValidInfo).set('authorization', 'validToken');
+    expect(status).to.be.equal(201);
+    expect(body).to.be.deep.equal(newMatchValidInfoReturn);
+  })
+  it('Recebe um erro ao tentar cadastra uma nova partida entre dois times iguais', async function() {
+    sinon.stub(SequelizeMatches, 'create').resolves();
+    sinon.stub(jwt, 'verify').returns({
+      role: 'user',
+    } as any)
+    const {status, body} = await chai.request(app).post('/matches').send(newMatchSameTeam).set('authorization', 'validToken');
+    expect(status).to.be.equal(422);
+    expect(body).to.be.deep.equal({
+      message: 'It is not possible to create a match with two equal teams'
+    });
+  }),
+  it('Recebe um erro ao tentar cadastra uma nova partida com um time que não existe', async function() {
+    sinon.stub(SequelizeTeams, 'findAll').resolves(allTeams as any)
+    sinon.stub(SequelizeMatches, 'create').resolves();
+    sinon.stub(jwt, 'verify').returns({
+      role: 'user',
+    } as any)
+    const {status, body} = await chai.request(app).post('/matches').send(newMatchNonExistentTeam).set('authorization', 'validToken');
+    expect(status).to.be.equal(404);
+    expect(body).to.be.deep.equal({ message: 'There is no team with such id!' });
   })
 })

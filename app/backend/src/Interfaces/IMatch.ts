@@ -8,8 +8,8 @@ export interface IMatch {
 }
 
 export interface IMatchReturn extends IMatch {
-  homeTeam: object,
-  awayTeam: object,
+  homeTeam: { teamName: string },
+  awayTeam: { teamName: string },
 }
 
 export interface IMatchModel {
@@ -22,4 +22,5 @@ export interface IMatchModel {
     homeTeamGoals: number,
     awayTeamGoals: number,
   ): Promise<IMatch>;
+  findMatchesByHomeTeam(id: number): Promise<IMatch[]>
 }

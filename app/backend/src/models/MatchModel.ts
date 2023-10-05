@@ -1,3 +1,4 @@
+import sequelize = require('sequelize');
 import SequelizeTeams from '../database/models/SequelizeTeams';
 import SequelizeMatches from '../database/models/SequelizeMatches';
 import { IMatch, IMatchModel } from '../Interfaces/IMatch';
@@ -61,5 +62,15 @@ export default class MatchModel implements IMatchModel {
       inProgress: true,
     });
     return response;
+  }
+
+  async findMatchesByHomeTeam(id: number): Promise<IMatch[]> {
+    const homeTeamMatches = await this.matchModelSequelize.findAll({
+      where: {
+        [sequelize.Op.or]: [{ homeTeamId: id }],
+        inProgress: false,
+      },
+    });
+    return homeTeamMatches;
   }
 }

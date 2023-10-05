@@ -1,12 +1,13 @@
 import SequelizeTeams from '../database/models/SequelizeTeams';
 import SequelizeMatches from '../database/models/SequelizeMatches';
-import { ILeaderboardModel } from '../Interfaces/ILeaderboard';
+import { IMatch, IMatchModel } from '../Interfaces/IMatch';
 
-export default class LeaderboardModel implements ILeaderboardModel {
+export default class MatchModel implements IMatchModel {
   private matchModelSequelize = SequelizeMatches;
 
-  public async rankTeams() {
-    const response = await this.matchModelSequelize.findAll({ where: { inProgress: false },
+  async findAll(inProgress: string): Promise<IMatch[]> {
+    const query = {
+      where: {},
       include: [
         {
           model: SequelizeTeams,
@@ -17,7 +18,48 @@ export default class LeaderboardModel implements ILeaderboardModel {
           as: 'awayTeam',
           attributes: ['teamName'],
         },
-      ] });
+      ],
+    };
+    if (inProgress === 'true') query.where = { inProgress: true };
+    if (inProgress === 'false') query.where = { inProgress: false };
+    const response = await this.matchModelSequelize.findAll(query);
+    return response;
+  }
+
+  async finishMatch(id: number): Promise<void> {
+    await this.matchModelSequelize.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+  }
+
+  async updateMatch(
+    id:number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<void> {
+    await this.matchModelSequelize.update(
+      {
+        homeTeamGoals,
+        awayTeamGoals,
+      },
+      { where: { id } },
+    );
+  }
+
+  async insertMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<IMatch> {
+    const response = await this.matchModelSequelize.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
     return response;
   }
 }

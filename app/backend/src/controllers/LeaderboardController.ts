@@ -6,7 +6,7 @@ export default class LeaderboardController {
   constructor(private leaderboardService = new LeaderboardService()) {}
 
   public async rankTeams(req: Request, res: Response) {
-    const serviceResponse = await this.leaderboardService.rankTeams();
+    const serviceResponse = await this.leaderboardService.returnLeaderboard();
     return res.status(mapStatusHTTP(serviceResponse.status)).json(serviceResponse.data);
   }
 }

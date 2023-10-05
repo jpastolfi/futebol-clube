@@ -21,13 +21,18 @@ export default class leaderboardHandler {
 
   static sortLeaderboards(leaderboard: ILeaderboard[]): ILeaderboard[] {
     return leaderboard
-      .sort((first, second) => first.goalsFavor - second.goalsFavor)
+    // Quarto critério: gols a favor
+      .sort((first, second) => second.goalsFavor - first.goalsFavor)
+    // Terceiro critério: saldo de gols
       .sort((first, second) => {
         if (first.goalsBalance && second.goalsBalance) {
           return second.goalsBalance - first.goalsBalance;
         }
         return 1;
-      }).sort((first, second) => second.totalVictories - first.totalVictories)
+      })
+      // Segundo critério: número de vitórias
+      .sort((first, second) => second.totalVictories - first.totalVictories)
+      // Primeiro critério: número de pontos
       .sort((first, second) => second.totalPoints - first.totalPoints);
   }
 
